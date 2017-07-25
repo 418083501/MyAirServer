@@ -10,6 +10,8 @@
 
 #import <GCDWebServer.h>
 
+#import <GCDWebServer/GCDWebServerDataResponse.h>
+
 @interface ViewController ()<NSNetServiceDelegate,GCDWebServerDelegate>
 {
     NSNetService *_serVice;
@@ -73,9 +75,24 @@
             if ([path isEqualToString:@"/pair-setup"]) {
                 
                 response = [[GCDWebServerResponse alloc] init];
-                response.contentType = @"RTSP/1.0";
-                response.contentLength = 32;
+                response.contentType = @"application/octet-stream";
+                response.contentLength = 32;//string.length;
                 response.statusCode = 200;
+                [response setValue:@"AirTunes/220.68" forAdditionalHeader:@"Server"];
+                [response setValue:@"0" forAdditionalHeader:@"CSeq"];
+                
+                
+            }
+            
+            if ([path isEqualToString:@"/pair-verify"]) {
+                
+                response = [[GCDWebServerResponse alloc] init];
+                response.contentType = @"application/octet-stream";
+                response.contentLength = 96;//string.length;
+                response.statusCode = 200;
+                [response setValue:@"AirTunes/220.68" forAdditionalHeader:@"Server"];
+                [response setValue:@"1" forAdditionalHeader:@"CSeq"];
+                
                 
             }
             
